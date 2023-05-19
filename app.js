@@ -5,6 +5,7 @@ var multer =require('multer');
 const fs=require("fs");
 const path=require("path");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
 
@@ -17,7 +18,7 @@ var imgModel = require('./models');
 let orgi="";
 let newPass="";
 let userID="";
-mongoose.connect("mongodb://127.0.0.1:27017/UserDB");
+mongoose.connect(process.env.URL);
 
 const userSchema =new mongoose.Schema({
     Id: String,
@@ -44,10 +45,10 @@ app.get('/Cart', (req, res) => {
     imgModel.find({}, (err, items) => {
         if (err) {
             console.log(err);
-            res.status(500).send('An error occurred', err);
+           return res.status(500).send('An error occurred', err);
         }
         else {
-            res.render('Cart', { items: items });
+           return res.render('Cart', { items: items });
         }
     });
 });
